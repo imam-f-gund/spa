@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Bootstrap Bundle JS
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import Logout from "../../controller/Logout";
-import getProfile from "../../controller/Profile";
+import getProfile from "../../api/Profile";
 
 class Navbar extends Component {
   constructor(props) {
@@ -49,6 +49,7 @@ class Navbar extends Component {
                         </a>
                         <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><NavLink className="dropdown-item" to="/data-user">User</NavLink></li>
+                            <li><NavLink className="dropdown-item" to="/data-users">User v.2</NavLink></li>
                             <li><NavLink className="dropdown-item" to="/master/department">Department</NavLink></li>
                         </ul>
                     </li>

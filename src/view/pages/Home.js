@@ -31,6 +31,15 @@ export const Home = () => {
           
           </div>
         </div>
+        <div className="card w-50 mx-auto mt-5">
+          <div className="card-header">
+          <h3 className="text-grey">Home</h3>
+          </div>
+          <div className="card-body">
+          {state ?  <ChartComponent /> : 'loading...'}
+          
+          </div>
+        </div>
         
         </>
     );

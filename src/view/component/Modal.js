@@ -10,6 +10,7 @@ class ModalComponent extends Component {
         super(props);
         this.state = {
         show: false,
+        modalType:"",
         buttonLabel: "",
         modalTitle: "",
         modalBody: "",
@@ -19,8 +20,6 @@ class ModalComponent extends Component {
     
     handleModal() {
         this.setState({ show: !this.state.show });
-        console.log(this.props.modalData);
-        
     }
     
     render() {
@@ -42,6 +41,8 @@ class ModalComponent extends Component {
                 </Button> */}
             </>:null
             }
+            {this.props.modalType == 'add' ? 
+            <>
             <Modal show={this.state.show} onHide={() => this.handleModal()}>
             <Modal.Header closeButton>
                 <Modal.Title>{this.props.modalTitle}</Modal.Title>
@@ -52,6 +53,23 @@ class ModalComponent extends Component {
             </Modal.Body>
             
             </Modal>
+            </>
+            :null}
+
+            {this.props.modalType == 'edit' ? 
+            <>
+            <Modal show={this.state.show} onHide={() => this.handleModal()}>
+            <Modal.Header closeButton>
+                <Modal.Title>{this.props.modalTitle}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>{this.props.modalBody} <Button variant="secondary" onClick={() => this.handleModal()}>
+                Close
+            </Button>
+            </Modal.Body>
+            
+            </Modal>
+            </>
+            :null}
         </>
         );
     }

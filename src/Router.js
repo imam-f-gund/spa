@@ -9,6 +9,7 @@ import About from "./view/pages/About";
 import Contact from "./view/pages/Contact";
 import Footer from "./view/layout/Footer";
 import DataUser from "./view/pages/master/DataUser";
+import DataUsers from "./view/pages/master/DataUsers";
 import Login from "./view/auth/Login";
 import NoPage from "./view/pages/NoPage";
 
@@ -74,6 +75,7 @@ class Router extends Component {
                 <Route exact path="/about" element={<About />} loading ></Route>
                 <Route exact path="/contact" element={<Contact />} loading></Route>
                 <Route exact path="/data-user" element={<DataUser />} loading></Route>
+                <Route exact path="/data-users" element={<DataUsers />} loading></Route>
                 <Route exact path="*" element={<NoPage/>} loading></Route>
                 
                 </Routes>

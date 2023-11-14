@@ -2,7 +2,6 @@
 
 // Path: src/view/component/TableComponent.js
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
 import $ from "jquery";
 import "datatables.net-dt/js/dataTables.dataTables";
@@ -55,6 +54,7 @@ class TableComponent extends Component {
                                 <td>{item.alamat}</td>
                                 <td>{item.no}</td>
                                 <td>{item.nama}</td>
+                        
                                {/* button action dropdown */}
                                 <td>
                                     <div className="btn-group">
@@ -63,40 +63,46 @@ class TableComponent extends Component {
                                         </button>
                                         <ul className="dropdown-menu">
                                             {/* add action for map */}
-                                            {this.props.tableAction.map((items) => (
-                                                <li key={item.id}>
-                                                    {/* <Link className="dropdown-item" to={items.link +"/"+ item.id_item}>{items.name}</Link> */}
-                                                    {items.name == "Edit" ?
-                                                            <>
-                                                            <ModalComponent
-                                                                modalData={
-                                                                    [item.nama,
-                                                                    item.no,
-                                                                    item.alamat]
-                                                                }
-                                                                typeBtn="dropdown-edit"
-                                                                buttonLabel={items.name}
-                                                                className="btn btn-primary float-end md-2"
-                                                                modalTitle={items.name}
-                                                                //input form here
-                                                                modalBody={
-                                                                    <>
-                                                                    {this.props.tableForm}
-                                                                    
-                                                                    </>
-                                                                } 
-                                                                modalFooter=""
-                                                            />
-                                                            </>
-                                                :null}
-                                                {items.name == "Delete" ?
-                                                            <>
-                                                            <a>Delete</a>
-                                                            </>
-                                                :null}
+                                            {item.actionEdit}
+                                            {/* {this.props.tableAction.map((items) => (
+                                               items.edit
+                                            ))} */}
 
-                                                </li>
-                                            ))}
+                                            {/* {this.props.tableAction.map((items) => (
+                                                // console.log(items),
+                                                // <li key={item.id}>
+                                                
+                                                //     {items.name == "Edit" ?
+                                                //             <>
+                                                //             <ModalComponent
+                                                //                 modalData={
+                                                //                     [item.nama,
+                                                //                     item.no,
+                                                //                     item.alamat]
+                                                //                 }
+                                                //                 typeBtn="dropdown-edit"
+                                                //                 buttonLabel={items.name}
+                                                //                 className="btn btn-primary float-end md-2"
+                                                //                 modalTitle={items.name}
+                                                //                 //input form here
+                                                //                 modalBody={
+                                                //                     <>
+                                                //                         {this.props.tableForm}
+                                                //                     </>
+                                                //                 } 
+                                                //                 modalFooter=""
+                                                //             />
+                                                //             </>
+                                                // :null}
+                                                // {items.name == "Delete" ?
+                                                //             <>
+                                                //             <a>Delete</a>
+                                                //             </>
+                                                // :null}
+
+                                                // </li>
+                                                
+                                            ))} */}
                                         </ul>
                                     </div>
                                 </td>
