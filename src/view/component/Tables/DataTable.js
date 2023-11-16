@@ -1,7 +1,8 @@
-import React from 'react'
+import {React, useEffect} from 'react'
 import { Table, Button } from 'reactstrap';
 import ModalForm from '../Modals/Modal';
 import axios from 'axios';
+import { DatasetController } from 'chart.js';
 
 const token = localStorage.getItem("token");
 
@@ -10,7 +11,7 @@ const headers = {
   'Authorization': `Bearer ${token}`,
 }
 function DataTable(props){
-  console.log(props.items);
+  // console.log(props.buttonEdit);
   const deleteItem = id => {
     let confirmDelete = window.confirm('Delete item forever?')
     if(confirmDelete){
@@ -35,40 +36,58 @@ function DataTable(props){
 
     }
   }
-
-  const items = props.items.map(item => {
+// get data key and value in object with map
+  const items = props.items.map((item, index) => {
+    
     return (
       <tr key={item.id}>
         <th scope="row">{item.id}</th>
-        <td>{item.name}</td>
-        <td>{item.no}</td>
-        <td>{item.email}</td>
-        
-        <td>
-          <div style={{width:"110px"}}>
-            <ModalForm buttonLabel="Edit" item={item} updateState={props.updateState}/>
-            {' '}
-            <Button color="danger" onClick={() => deleteItem(item.id)}>Del</Button>
+        {props.dataItem.map((theadItem, index) => {
+              return (
+                <td key={index}>{item[theadItem]}</td>
+              )
+            }
+        )}
+       
+        <td className="col-3">
+          <div>
+            {props.buttonEdit?(
+              <ModalForm editTitle="Edit" buttonLabel="Edit" item={item} updateState={props.updateState}/>
+            ):null  
+            }
+            {props.buttonDelete?(
+              <Button color="danger" onClick={() => deleteItem(item.id)}>Delete</Button>
+            ):null  
+            }
+            {props.buttonDetail?(
+              <ModalForm detailTitle="Detail" buttonLabel="Detail" item={item} updateState={props.updateState}/>
+            ):null  
+            }
+          
           </div>
         </td>
       </tr>
       )
     })
-
+   
   return (
-    <Table responsive hover>
+  <div className="mt-2">
+    <table id="example" className="table table-striped table-bordered table-sm">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>First</th>
-          <th>Last</th>
-          <th>Actions</th>
+          {props.theadItems.map((theadItem, index) => {
+              return (
+                <th key={index}>{theadItem}</th>
+              )
+            }
+          )}
         </tr>
       </thead>
       <tbody>
-        {items}
+      {items}
       </tbody>
-    </Table>
+    </table>
+  </div>
   )
 }
 

@@ -13,6 +13,8 @@ function AddEditForm(props) {
     role: ""
   });
 
+  const [isLoad, setIsLoad] = useState(false);
+
   const token = localStorage.getItem("token");
 
   const headers = {
@@ -53,14 +55,15 @@ function AddEditForm(props) {
 
   const submitFormEdit = (e) => {
     e.preventDefault();
-    // console.log(e.target.id.value);
+    
     var id = e.target.id.value;
     setTimeout(() => {
       axios.post(process.env.REACT_APP_API_LINK + "user/"+ id, form, {headers: headers})
       .then((res) => {
         // console.log(res.data.status);
         if (res.data.status == 'success') {
-      
+          props.updateState(form,true);
+          props.toggle();
           alert('berhasil update data');
          
         }else{
@@ -72,9 +75,6 @@ function AddEditForm(props) {
       });
         
     }, 1000)
-  
-    props.updateState(form);
-    props.toggle();
   };
 
   useEffect(() => {

@@ -29,8 +29,19 @@ function ModalForm(props) {
         {label}
       </Button>
     );
-    title = "Edit Item";
-  } else {
+    title = props.editTitle;
+  } else if(label === "Detail"){
+    button = (
+      <Button
+        color="secondary"
+        onClick={toggle}
+        style={{ float: "left", marginRight: "10px" }}
+      >
+        {label}
+      </Button>
+    );
+    title = props.detailTitle;
+  }else {
     button = (
       <Button
         color="success"
@@ -40,7 +51,7 @@ function ModalForm(props) {
         {label}
       </Button>
     );
-    title = "Add New Item";
+    title = props.addTitle;
   }
 
   return (
