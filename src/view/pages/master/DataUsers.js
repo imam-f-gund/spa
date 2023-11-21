@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import ModalForm from "../../component/Modals/Modal";
 import DataTable from "../../component/Tables/DataTable";
-import getDataUser from "../../../api/User";
-// import axios from 'axios';
+import getDataUser from "../../../api/User/getUser";
 import { useLoadingContext } from 'react-router-loading';
+import Spinner from "../../component/LoadingBody/Spinner";
+import deleteUser from "../../../api/User/deleteUser";
 // import { CSVLink } from "react-csv";
 
 function DataUsers(props) {
@@ -17,40 +18,43 @@ function DataUsers(props) {
     // loading some data
     const data = await getDataUser();
     setItems(data.data);
+    setIsLoad(true);
     // call method to indicate that loading is done
     loadingContext.done();
   };
 
-  const addItemToState = (item) => {
-    setItems([...items, item]);
+  const addItemToState = (item, load) => {
+    setIsLoad(false)
+    loading();
   };
 
   const updateState = (item, load) => {
-
-    setTimeout(() => {
-      setIsLoad(false)
-    }, 1000);
-    
-    const itemIndex = items.findIndex((data) => data.id === item.id);
-    const newArray = [
-      ...items.slice(0, itemIndex),
-      item,
-      ...items.slice(itemIndex + 1)
-    ];
-    setItems(newArray);
-    // setIsLoad(load)
+   
+    setIsLoad(false)
+    loading();
   };
 
-  const deleteItemFromState = (id) => {
-    const updatedItems = items.filter((item) => item.id !== id);
-    setItems(updatedItems);
-    setIsLoad(false)
+  const href = (item) => {
+    console.log(item);
+  };
+
+  const deleteState = (item) => {
+
+    let confirmDelete = window.confirm('Delete item forever?')
+    if(confirmDelete){
+      setIsLoad(false);
+      deleteUser(item).then(res => {
+        if(res.status === 'success'){
+          loading();
+        }
+      })
+    }
   };
 
   useEffect(() => {
     loading();
     setIsLoad(true);
-  }, [isLoad]);
+  }, []);
 
   return (
     <div className="card w-75 mx-auto mt-5">
@@ -61,7 +65,7 @@ function DataUsers(props) {
         <div className="card-body">
         <tr>
           <td>
-            <ModalForm addTitle='Tambah User' buttonLabel="Tambah" addItemToState={addItemToState} />
+            <ModalForm  title='Tambah User' buttonLabel="Tambah" size="sm" addItemToState={addItemToState} />
           </td>
         </tr>
         {isLoad ?
@@ -81,15 +85,34 @@ function DataUsers(props) {
                     }
                   })
                 }
-                buttonEdit={true}
-                buttonDelete={true}
+
+                // function
                 updateState={updateState}
-                deleteItemFromState={deleteItemFromState}
+                // callback={href}
+                // href={href}
+                deleteState={deleteState}
+                // deleteItemFromState={deleteItemFromState}
+                
+                //button modal 
+                anyButtonModal={[
+                  {title:"Edit", buttonLabel:"Edit", buttonColor:"warning", buttonSize:"sm"},
+                ]}
+
+                // button
+                anyButton={[
+                  {title:"Delete", buttonLabel:"Delete", buttonColor:"danger", buttonSize:"sm", type:"delete"}
+                ]}
+
+                // dropdown
+                // anyDropdown={[
+                //   {title:"Delete",type:"delete"},
+                //   {title:"To From",type:"href"},
+                // ]}
+                // anyDropdownTitle="Action"
+                
             /> :
         <>
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
+          <Spinner/>
         </>  
         }
             

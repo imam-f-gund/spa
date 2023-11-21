@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
-import AddEditForm from "../Forms/FormAddEdit";
+import AddEditForm from "../Forms/FormAddEditDataUser";
 
 function ModalForm(props) {
   const [modal, setModal] = useState(false);
@@ -14,45 +14,56 @@ function ModalForm(props) {
       &times;
     </button>
   );
-  const label = props.buttonLabel;
 
   let button = "";
-  let title = "";
 
-  if (label === "Edit") {
+  if (button !== null) {
     button = (
       <Button
-        color="warning"
+        color={props.buttonColor}
+        size={props.buttonSize}
         onClick={toggle}
         style={{ float: "left", marginRight: "10px" }}
       >
-        {label}
+        {props.buttonLabel}
       </Button>
     );
-    title = props.editTitle;
-  } else if(label === "Detail"){
-    button = (
-      <Button
-        color="secondary"
-        onClick={toggle}
-        style={{ float: "left", marginRight: "10px" }}
-      >
-        {label}
-      </Button>
-    );
-    title = props.detailTitle;
-  }else {
-    button = (
-      <Button
-        color="success"
-        onClick={toggle}
-        style={{ float: "left", marginRight: "10px" }}
-      >
-        {label}
-      </Button>
-    );
-    title = props.addTitle;
   }
+ 
+
+  // if (label === "Edit") {
+  //   button = (
+  //     <Button
+  //       color="warning"
+  //       onClick={toggle}
+  //       style={{ float: "left", marginRight: "10px" }}
+  //     >
+  //       {label}
+  //     </Button>
+  //   );
+  //   title = props.title;
+  // } else if(label === "Detail"){
+  //   button = (
+  //     <Button
+  //       onClick={toggle}
+  //       style={{ float: "left", marginRight: "10px" }}
+  //     >
+  //       {label}
+  //     </Button>
+  //   );
+  //   title = props.title;
+  // }else {
+  //   button = (
+  //     <Button
+  //       color="success"
+  //       onClick={toggle}
+  //       style={{ float: "left", marginRight: "10px" }}
+  //     >
+  //       {label}
+  //     </Button>
+  //   );
+  //   title = props.addTitle;
+  // }
 
   return (
     <div>
@@ -65,7 +76,7 @@ function ModalForm(props) {
         keyboard={false}
       >
         <ModalHeader toggle={toggle} close={closeBtn}>
-          {title}
+          {props.title}
         </ModalHeader>
         <ModalBody>
           <AddEditForm

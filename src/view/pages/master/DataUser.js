@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLoadingContext } from "react-router-loading";
 import TableComponent from "../../component/TableComponent";
 import ModalComponent from "../../component/Modal";
-import getDataUser from "../../../api/User";
+import getDataUser from "../../../api/User/getUser";
 import axios from "axios";
 
 
