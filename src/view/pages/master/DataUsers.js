@@ -5,11 +5,13 @@ import getDataUser from "../../../api/User/getUser";
 import { useLoadingContext } from 'react-router-loading';
 import Spinner from "../../component/LoadingBody/Spinner";
 import deleteUser from "../../../api/User/deleteUser";
+import AddEditForm from "../../component/Forms/FormAddEditDataUser";
 // import { CSVLink } from "react-csv";
 
 function DataUsers(props) {
   const [items, setItems] = useState([
   ]);
+  const [itemUpdate, setItemUpdate] = useState([]);
   const [isLoad, setIsLoad] = useState([false]);
 
   const loadingContext = useLoadingContext();
@@ -23,21 +25,29 @@ function DataUsers(props) {
     loadingContext.done();
   };
 
-  const addItemToState = (item, load) => {
+  // return status submit add
+  const addSubmit = (load) => {
     setIsLoad(false)
-    loading();
+     if (load === true) {
+      loading();
+    }
   };
 
-  const updateState = (item, load) => {
-   
+  // return status submit update
+  const updateSubmit = (load) => {
+    console.log(load);
     setIsLoad(false)
-    loading();
+    if (load === true) {
+      loading();
+    }
   };
 
-  const href = (item) => {
-    console.log(item);
+  // set item update 
+  const updateState = (item) => {
+    setItemUpdate(item);
   };
 
+  // delete 
   const deleteState = (item) => {
 
     let confirmDelete = window.confirm('Delete item forever?')
@@ -65,7 +75,12 @@ function DataUsers(props) {
         <div className="card-body">
         <tr>
           <td>
-            <ModalForm  title='Tambah User' buttonLabel="Tambah" size="sm" addItemToState={addItemToState} />
+            <ModalForm  title='Tambah User' buttonLabel="Tambah" size="sm" typeSubmit="add"
+            addEditForm={
+                  <AddEditForm
+                        addSubmit={addSubmit}
+                      />
+                } />
           </td>
         </tr>
         {isLoad ?
@@ -86,16 +101,15 @@ function DataUsers(props) {
                   })
                 }
 
-                // function
+                // function in data table
                 updateState={updateState}
                 // callback={href}
                 // href={href}
                 deleteState={deleteState}
-                // deleteItemFromState={deleteItemFromState}
                 
                 //button modal 
                 anyButtonModal={[
-                  {title:"Edit", buttonLabel:"Edit", buttonColor:"warning", buttonSize:"sm"},
+                  {title:"Edit", buttonLabel:"Edit", buttonColor:"warning", buttonSize:"sm", typeSubmit:"update"},
                 ]}
 
                 // button
@@ -108,12 +122,22 @@ function DataUsers(props) {
                 //   {title:"Delete",type:"delete"},
                 //   {title:"To From",type:"href"},
                 // ]}
+
+                // title dropdown
                 // anyDropdownTitle="Action"
+
+                // add edit form
+                addEditForm={
+                  <AddEditForm
+                        updateSubmit={updateSubmit}
+                        item={itemUpdate}
+                      />
+                }
                 
             /> :
-        <>
-          <Spinner/>
-        </>  
+          <>
+            <Spinner/>
+          </>  
         }
             
         </div>

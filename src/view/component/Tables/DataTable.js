@@ -42,7 +42,11 @@ function DataTable(props){
             {props.anyButtonModal?(
               props.anyButtonModal.map((data) => {
                 return (
-                  <ModalForm title={data.title} buttonColor={data.buttonColor} buttonSize={data.buttonSize} buttonLabel={data.buttonLabel} item={item} updateState={props.updateState}/>
+                  <ModalForm title={data.title} buttonColor={data.buttonColor} buttonSize={data.buttonSize} buttonLabel={data.buttonLabel} item={item} updateState={props.updateState} typeSubmit={props.typeSubmit} addEditForm={
+                    <>
+                      {props.addEditForm}
+                    </>
+                  }/>
                 )
               }
             ) 

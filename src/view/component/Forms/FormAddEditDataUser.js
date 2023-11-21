@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import {Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { ReactComponent as Loader } from '../../../assets/icons/loader.svg';
 import axios from 'axios';
 
 function AddEditForm(props) {
+  const [loading, setShowLoader] = useState(false);
+  
   const [form, setValues] = useState({
     id: "",
     name: "",
@@ -28,46 +31,49 @@ function AddEditForm(props) {
   };
 
   const submitFormAdd = (e) => {
+    setShowLoader(true)
     e.preventDefault();
     setTimeout(() => {
       axios.post(process.env.REACT_APP_API_LINK + "user", form, {headers: headers})
       .then((res) => {
         // console.log(res.data.status);
         if (res.data.status == 'success') {
-          props.addItemToState(form,true);
-          props.toggle();
+          setShowLoader(false)
           alert('berhasil menambahkan data');
-         
+          props.addSubmit(true);
+        
         }else{
+          setShowLoader(false)
           alert('gagal menambahkan data');
         }
        
       }).catch((error) => {
-        console.log(error.response.data.message);
+        console.log(error);
       });
         
     }, 1000)
   };
 
   const submitFormEdit = (e) => {
+    setShowLoader(true)
     e.preventDefault();
     
     var id = e.target.id.value;
     setTimeout(() => {
       axios.post(process.env.REACT_APP_API_LINK + "user/"+ id, form, {headers: headers})
       .then((res) => {
-        // console.log(res.data.status);
         if (res.data.status == 'success') {
-          props.updateState(form,true);
-          props.toggle();
+          setShowLoader(false)
           alert('berhasil update data');
+          props.updateSubmit(true);
          
         }else{
+          setShowLoader(false)
           alert('gagal update data');
         }
        
       }).catch((error) => {
-        console.log(error.response.data.message);
+        console.log(error);
       });
         
     }, 1000)
@@ -76,7 +82,6 @@ function AddEditForm(props) {
   useEffect(() => {
     if (props.item) {
       const {id, name, email, password, username, phone, role} = props.item;
-      // const { id, first, last, email, phone, location, hobby } = props.item;
       setValues({id, name, email, password, username, phone, role });
     }
   }, [props.item]);
@@ -150,8 +155,8 @@ function AddEditForm(props) {
           value={form.role === null ? "" : form.role}
         />
       </FormGroup>
-   
-      <Button>Submit</Button>
+      
+      <Button >{!loading ? 'Submit' : <Loader className="spinner" />}</Button>
     </Form>
   );
 }

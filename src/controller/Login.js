@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
-import Button from "../view/component/LoadingButton/Button";
+import Buttons from "../view/component/LoadingButton/Button";
 import '../App.css';
 import axios from "axios";
 
@@ -52,7 +52,7 @@ export default function Login() {
           <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
         </div>
         <div className="mb-3">
-            <Button text="Login" className="btn btn-primary float-end" onSubmit={onSubmit} loading={showLoader} disabled={showLoader} />
+            <Buttons text="Login" variant="sucess" onSubmit={onSubmit} loading={showLoader} disabled={showLoader} />
         </div>
       </>
     )

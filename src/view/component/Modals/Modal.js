@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
-import AddEditForm from "../Forms/FormAddEditDataUser";
 
 function ModalForm(props) {
   const [modal, setModal] = useState(false);
 
   const toggle = () => {
-    setModal(!modal);
+    if (props.typeSubmit == 'add') {
+      
+      setModal(!modal);
+    } else {
+      callback(props.item);
+      setModal(!modal);
+    }
+    
   };
 
   const closeBtn = (
@@ -29,41 +35,10 @@ function ModalForm(props) {
       </Button>
     );
   }
- 
 
-  // if (label === "Edit") {
-  //   button = (
-  //     <Button
-  //       color="warning"
-  //       onClick={toggle}
-  //       style={{ float: "left", marginRight: "10px" }}
-  //     >
-  //       {label}
-  //     </Button>
-  //   );
-  //   title = props.title;
-  // } else if(label === "Detail"){
-  //   button = (
-  //     <Button
-  //       onClick={toggle}
-  //       style={{ float: "left", marginRight: "10px" }}
-  //     >
-  //       {label}
-  //     </Button>
-  //   );
-  //   title = props.title;
-  // }else {
-  //   button = (
-  //     <Button
-  //       color="success"
-  //       onClick={toggle}
-  //       style={{ float: "left", marginRight: "10px" }}
-  //     >
-  //       {label}
-  //     </Button>
-  //   );
-  //   title = props.addTitle;
-  // }
+  const callback = (form) => {
+    props.updateState(form);
+  }
 
   return (
     <div>
@@ -79,12 +54,7 @@ function ModalForm(props) {
           {props.title}
         </ModalHeader>
         <ModalBody>
-          <AddEditForm
-            addItemToState={props.addItemToState}
-            updateState={props.updateState}
-            toggle={toggle}
-            item={props.item}
-          />
+          {props.addEditForm}
         </ModalBody>
       </Modal>
     </div>
