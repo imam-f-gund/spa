@@ -26,7 +26,7 @@ topbar.config({
   });
   
 
-class Router extends Component {
+class AdminRouter extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -38,7 +38,7 @@ class Router extends Component {
     
     componentDidMount() {
         
-        if (localStorage.getItem('token') != null) {
+        if (this.props.token != null && this.props.role == 'admin') {
 
             this.setState({
                 isLoggedIn: true,
@@ -52,11 +52,11 @@ class Router extends Component {
 
         }
 
-        setTimeout(() => {
+        // setTimeout(() => {
             this.setState({
                 isLoading: false,
             });
-        }, 1000)
+        // }, 1000)
     }
 
     render() {
@@ -84,7 +84,7 @@ class Router extends Component {
             <Footer />
             </>
             ) : (
-            <Login />
+            <Login/>
             )}
         </BrowserRouter>
             )
@@ -92,4 +92,4 @@ class Router extends Component {
     }
 }
 
-export default Router;
+export default AdminRouter;

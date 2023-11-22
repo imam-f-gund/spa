@@ -7,7 +7,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import AuthLogin from "../../controller/Login";
 
-class Login extends Component {    
+class Login extends Component {
+
     render() {
         return (
             <div className="container">

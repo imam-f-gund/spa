@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import {useNavigate} from 'react-router-dom';
+import {redirect, useNavigate} from 'react-router-dom';
 import Button from "../view/component/LoadingButton/Button";
 import '../App.css';
 import axios from "axios";
 
-export default function Login() {
+export default function Login(props) {
     const navigate = useNavigate();
     const [username , setUsername ] = useState('');
     const [password, setPassword] = useState('');
@@ -20,9 +20,9 @@ export default function Login() {
         })
         .then((res) => {
           if (res.status == 200) {
-            console.log(res.data.data.token);
             localStorage.setItem("token", res.data.data.token);
             localStorage.setItem("nama", res.data.data.user.nama);
+            localStorage.setItem("role", res.data.data.user.role);
             navigate(0);
           }else{
             alert('Username  atau Password salah');
