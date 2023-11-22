@@ -1,7 +1,6 @@
 import {React, useEffect, useState} from 'react'
-import { Table, Button, Dropdown } from 'react-bootstrap';
+import { Table, Pagination, Button, Dropdown } from 'react-bootstrap';
 import ModalForm from '../Modals/Modal';
-import axios from 'axios';
 
 const token = localStorage.getItem("token");
 
@@ -9,10 +8,30 @@ const headers = {
   'Content-Type': 'application/json',
   'Authorization': `Bearer ${token}`,
 }
+
 function DataTable(props){
+ 
+  const paginationBasic = 
+    <div>
+      <Pagination size="sm" className="d-flex justify-content-center">
+        {props.itemsPaginate.map((data) => {
+            return (
+             
+              <Pagination.Item key={data.label} onClick={() => callbackPaginateAction(data.url)} active={data.active === true} >
+                {data.label}
+              </Pagination.Item>
+            )
+        })}
+      </Pagination>
+    </div>;
+
   const callback = id => {
 
     props.callback(id);
+  }
+  const callbackPaginateAction = url => {
+
+    props.paginateAction(url);
   }
   const href = id => {
     
@@ -103,6 +122,7 @@ function DataTable(props){
           </div>
         </td>
       </tr>
+            
       )
     })
    
@@ -121,9 +141,9 @@ function DataTable(props){
       </thead>
       <tbody>
       {items}
-    
       </tbody>
     </Table>
+    {paginationBasic}
   </div>
   )
 }

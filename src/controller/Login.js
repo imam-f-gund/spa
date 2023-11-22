@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
-import Buttons from "../view/component/LoadingButton/Button";
+import Button from "../view/component/LoadingButton/Button";
 import '../App.css';
 import axios from "axios";
 
@@ -23,7 +23,6 @@ export default function Login() {
             console.log(res.data.data.token);
             localStorage.setItem("token", res.data.data.token);
             localStorage.setItem("nama", res.data.data.user.nama);
-            navigate('/');
             navigate(0);
           }else{
             alert('Username  atau Password salah');
@@ -52,7 +51,7 @@ export default function Login() {
           <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
         </div>
         <div className="mb-3">
-            <Buttons text="Login" variant="sucess" onSubmit={onSubmit} loading={showLoader} disabled={showLoader} />
+            <Button text="Login" className="btn btn-primary float-end" onSubmit={onSubmit} loading={showLoader} disabled={showLoader} />
         </div>
       </>
     )

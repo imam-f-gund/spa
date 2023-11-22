@@ -156,7 +156,7 @@ function AddEditForm(props) {
         />
       </FormGroup>
       
-      <Button >{!loading ? 'Submit' : <Loader className="spinner" />}</Button>
+      <Button color={props.buttonColor} size={props.size}>{!loading ? 'Submit' : <Loader className="spinner" />}</Button>
     </Form>
   );
 }

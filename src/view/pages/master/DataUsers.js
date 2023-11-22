@@ -11,34 +11,55 @@ import AddEditForm from "../../component/Forms/FormAddEditDataUser";
 function DataUsers(props) {
   const [items, setItems] = useState([
   ]);
+  // data paginate
+  const [itemPaginate, setItemPaginate] = useState([
+  ]);
+  // dinamis page url paginate
+  const [urlPaginate, setUrlPaginate] = useState([
+  ]);
   const [itemUpdate, setItemUpdate] = useState([]);
   const [isLoad, setIsLoad] = useState([false]);
 
   const loadingContext = useLoadingContext();
 
-  const loading = async () => {
+  const loading = async (pages) => {
     // loading some data
-    const data = await getDataUser();
+    const data = await getDataUser(pages);
     setItems(data.data);
+    setItemPaginate(data.links);
     setIsLoad(true);
     // call method to indicate that loading is done
     loadingContext.done();
   };
 
+  const paginateAction = (url) => {
+    setIsLoad(false)
+    let urls = "";
+    if (url !== null) {
+      urls = url.split("?");
+      setUrlPaginate("?"+urls[1]);
+     
+      loading("?"+urls[1]);
+    }else{
+      setUrlPaginate("?"+urls);
+      loading(urls);
+    }
+  }
+
   // return status submit add
   const addSubmit = (load) => {
     setIsLoad(false)
      if (load === true) {
-      loading();
+      loading(urlPaginate);
     }
   };
 
   // return status submit update
   const updateSubmit = (load) => {
-    console.log(load);
+    console.log(urlPaginate);
     setIsLoad(false)
     if (load === true) {
-      loading();
+      loading(urlPaginate);
     }
   };
 
@@ -55,14 +76,14 @@ function DataUsers(props) {
       setIsLoad(false);
       deleteUser(item).then(res => {
         if(res.status === 'success'){
-          loading();
+          loading(urlPaginate);
         }
       })
     }
   };
 
   useEffect(() => {
-    loading();
+    loading(urlPaginate);
     setIsLoad(true);
   }, []);
 
@@ -75,9 +96,11 @@ function DataUsers(props) {
         <div className="card-body">
         <tr>
           <td>
-            <ModalForm  title='Tambah User' buttonLabel="Tambah" size="sm" typeSubmit="add"
+            <ModalForm  title='Tambah User' buttonColor='primary' buttonLabel="Tambah" size="sm" typeSubmit="add"
             addEditForm={
                   <AddEditForm
+                        buttonColor='success'
+                        size="sm" 
                         addSubmit={addSubmit}
                       />
                 } />
@@ -100,6 +123,10 @@ function DataUsers(props) {
                     }
                   })
                 }
+                itemsPaginate={
+                  itemPaginate
+                }
+                paginateAction={paginateAction}
 
                 // function in data table
                 updateState={updateState}
@@ -129,6 +156,8 @@ function DataUsers(props) {
                 // add edit form
                 addEditForm={
                   <AddEditForm
+                        buttonColor='success'
+                        size="sm" 
                         updateSubmit={updateSubmit}
                         item={itemUpdate}
                       />

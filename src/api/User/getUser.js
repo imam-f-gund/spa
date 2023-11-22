@@ -1,6 +1,6 @@
 import axios from "axios";
 
-    const getDataUser = async () => {
+    const getDataUser = async (pages) => {
       const token = localStorage.getItem("token");
       const headers = {
         'Content-Type': 'application/json',
@@ -10,11 +10,10 @@ import axios from "axios";
         await new Promise(r => setTimeout(r, 1000));
     
         const response = await axios.get(
-            process.env.REACT_APP_API_LINK + "user?limit=100", {
+            process.env.REACT_APP_API_LINK + "user" + pages, {
                headers: headers, 
               }
         );
-        // console.log(response.data.data);
         return response.data.data;
     };
 
